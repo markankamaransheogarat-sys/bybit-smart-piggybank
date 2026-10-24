@@ -9,13 +9,130 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-**Умный автономный накопительный движок для формирования классического крипто-портфеля (BTC, ETH, SOL) на Bybit с алгоритмическим выкупом просадок, фиксацией прибыли в резерв, риск-менеджментом, Web-дашбордом и поддержкой AI-оператора через MCP.**
+**An autonomous, algorithmic portfolio accumulation engine for building a classical crypto basket (BTC, ETH, SOL) on Bybit Spot. Features dynamic dip-buying, profit harvesting back into reserve, automated risk management, real-time Web Dashboard, and native AI operator support via MCP.**
 
-[Возможности](#-ключевые-возможности) • [Архитектура](#-архитектура-движка) • [Стратегия](#-тройная-логика-накопления) • [Установка](#-быстрый-старт) • [AI-Оператор (MCP)](#-ai-оператор--mcp-протокол) • [Дашборд](#-веб-дашборд)
+[English](#-english-version) • [Русская версия](#-русская-версия)
 
 </div>
 
 ---
+
+# 🇬🇧 English Version
+
+## ⚡ Overview
+
+Conventional DCA bots blindly purchase assets on rigid schedules, frequently buying local tops immediately before catastrophic market downtrends. 
+**Bybit Smart Piggybank** takes inspiration from high-grade quantitative trading architectures (inspired by `bybit-ws`) but adapts them specifically for **safe, non-liquidatable Spot portfolio accumulation**:
+
+* 📉 **Aggressive Dip-Buying (Smart Dip Engine):** Scales position sizes up to **4.0x** when price kisses or pierces Lower Bollinger Bands paired with RSI oversold extremes.
+* 📈 **Profit Harvester & Rebalancer:** Automatically trims 15–20% of accumulated positions during extreme euphoric pumps (RSI > 75 + Upper Bollinger Band breakout) into liquid USDT, replenishing dry powder for the next inevitable discount.
+* 🛡️ **Anti-Falling Knife Defense (Circuit Breaker):** Dynamically halts all purchase activities when macro assets (e.g. BTC) crash > 10% in 24 hours.
+* 🧠 **AI-Native & Operator-Ready (MCP):** Embedded **Model Context Protocol (MCP)** server allows modern LLM agents (Claude, Cursor, Antigravity) to inspect, monitor, and direct portfolio actions directly via chat.
+
+---
+
+## 🌟 Key Capabilities
+
+| Feature | Description |
+| :--- | :--- |
+| **Simulation Mode (Dry-Run)** | Runs against live Bybit order books and real-time candles with a virtual `$1,000 USDT` bankroll. Completely risk-free testing. |
+| **Classical Basket** | Balanced baseline allocation: **BTC (45%)**, **ETH (35%)**, **SOL (20%)** with **USDT** liquid reserve. |
+| **Circuit Breaker** | Real-time market crash sentinel. Freezes buying upon flash crashes to prevent catching falling knives. |
+| **Cost-Basis Accounting** | Tracks weighted average acquisition price per asset in local SQLite database. |
+| **Daily Spend Ceiling** | Hard configurable cap on total USDT deployed within any rolling 24-hour window (default: $150). |
+| **Telegram Notifications** | Beautiful, instant alerts on orders, profit-taking harvests, and market status. |
+| **Cyberpunk Web Dashboard** | Fast UI built on FastAPI + Tailwind CSS: live metrics, PnL per coin, indicator radar, and manual action buttons. |
+
+---
+
+## 🏗 Engine Architecture
+
+The engine runs a non-blocking asynchronous event loop (`asyncio`) partitioned into 3 distinct operational cadences:
+
+```
+┌───────────────── FAST TICK LOOP (every 60s) ──────────────────────┐
+│ • Ingest live Bybit v5 Spot candles & order books (1h timeframe) │
+│ • Compute Bollinger Bands (20, 2.0) & RSI (14)                   │
+│ • Evaluate Circuit Breaker status (BTC 24h delta)                │
+│ • Profit Harvester: verify overbought & take-profit criteria     │
+├──────────────────────────────────────────────────────────────────┤
+│ HEAVY ANALYSIS LOOP (every ~5 minutes)                           │
+│ • Evaluate Smart Dip-Buying triggers for each asset              │
+│ • Apply dynamic multipliers (1.5x / 2.5x / 4.0x)                 │
+│ • Validate daily spend ceiling & reserve floor rules             │
+│ • Dispatch market buy orders + push Telegram notification        │
+├──────────────────────────────────────────────────────────────────┤
+│ SCHEDULED ROUTINE (every 24 hours)                               │
+│ • Base scheduled DCA accumulation pass                           │
+│ • Synchronize balances & recalculate average cost basis          │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🎯 Triple Accumulation Logic
+
+```mermaid
+graph TD
+    PriceCheck[Market Analysis & Indicators] -->|RSI < 38 & Price at Lower BB| Mild[Mild Dip: 1.5x Order Size]
+    PriceCheck -->|RSI < 32 & Price <= Lower BB| Deep[Deep Discount: 2.5x Order Size]
+    PriceCheck -->|RSI < 25 & BB Pierce > 2%| Extreme[Extreme Flash Crash: 4.0x Order Size]
+    PriceCheck -->|RSI > 75 & Price >= Upper BB & PnL > +12%| Harvest[Profit Harvester: Sell 15% to USDT]
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/markankamaransheogarat-sys/bybit-smart-piggybank.git
+cd bybit-smart-piggybank
+pip install -r requirements.txt
+```
+
+### 2. Configuration
+Copy the environment template:
+```bash
+cp .env.example .env
+```
+Populate `.env` (leave API keys blank for Simulation/Dry-Run):
+```ini
+BYBIT_API_KEY=your_key_here
+BYBIT_API_SECRET=your_secret_here
+BYBIT_TESTNET=false
+
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
+
+DASHBOARD_HOST=127.0.0.1
+DASHBOARD_PORT=8080
+```
+
+> **Note:** By default, `config/config.yaml` has `dry_run: true`. You can run and test everything against real Bybit market prices safely without real capital!
+
+### 3. Launch
+```bash
+python main.py
+```
+Open **`http://127.0.0.1:8080`** in your browser to view the live dashboard!
+
+---
+
+## 🤖 AI Operator & MCP Protocol
+
+An embedded **Model Context Protocol (MCP)** server allows external LLMs to act as fund operators:
+
+* `get_piggybank_status`: Returns balances, PnL per asset, reserve USDT, and daily spend limits.
+* `get_market_analysis`: Returns current Bollinger Bands, RSI, and dip/harvest metrics.
+* `ai_operator_execute_buy`: Empowers the AI to execute discretionary buys with structured reasoning.
+* `ai_operator_harvest_profit`: Allows the AI to harvest percentage of holdings into USDT.
+
+---
+
+<br>
+
+# 🇷🇺 Русская версия
 
 ## ⚡ О проекте
 
@@ -43,120 +160,30 @@
 
 ---
 
-## 🏗 Архитектура движка
-
-Движок функционирует в неблокирующем асинхронном цикле (`asyncio`), разделяя задачи по частоте вычислений:
-
-```
-┌───────────────── FAST TICK LOOP (каждые 60 сек) ─────────────────┐
-│ • Сбор тикеров и свечей Bybit v5 (1h timeframe)                  │
-│ • Расчет полос Боллинджера (20, 2.0) и RSI (14)                   │
-│ • Проверка Circuit Breaker (крах BTC за 24ч)                     │
-│ • Profit Harvester: проверка условий фиксации пампа в USDT       │
-├──────────────────────────────────────────────────────────────────┤
-│ HEAVY ANALYSIS LOOP (каждые ~5 минут)                            │
-│ • Оценка Smart Dip-Buying для каждого актива                     │
-│ • Применение динамических мультипликаторов (1.5x / 2.5x / 4.0x)  │
-│ • Проверка суточного лимита и пола резерва                       │
-│ • Исполнение ордеров выкупа просадки + Telegram алерт            │
-├──────────────────────────────────────────────────────────────────┤
-│ SCHEDULED ROUTINE (раз в 24 часа)                                │
-│ • Плановый базовый DCA-выкуп                                     │
-│ • Синхронизация балансов и пересчет средних цен                  │
-└──────────────────────────────────────────────────────────────────┘
-```
-
----
-
 ## 🎯 Тройная логика накопления
 
-### 1. Регулярный DCA (Scheduled DCA)
-Раз в сутки бот совершает базовые покупки активов согласно целевым долям (например, BTC $15, ETH $10, SOL $5), обеспечивая монотонный приток позиций.
-
-### 2. Умный выкуп просадок (Smart Dip-Buying)
-Когда на рынке происходит коррекция, система рассчитывает положение цены относительно полос Боллинджера и индекс RSI:
-
-```mermaid
-graph TD
-    PriceCheck[Проверка цены и RSI] -->|RSI < 38 и цена у нижней BB| Mild[Легкая просадка: 1.5x выкуп]
-    PriceCheck -->|RSI < 32 и цена <= нижней BB| Deep[Глубокая скидка: 2.5x выкуп]
-    PriceCheck -->|RSI < 25 и пробой BB > 2%| Extreme[Экстремальный обвал: 4.0x выкуп]
-```
-
-### 3. Сбор урожая (Profit Harvester & Rebalance)
-Большинство людей не фиксируют прибыль вовремя. Piggybank защищает накопленное:
-* **Условие:** Актив вырос более чем на **+12%** от средней цены покупки, пробил верхнюю полосу Боллинджера, а RSI перевалил за **75.0** (эйфория).
-* **Действие:** Продает **15–20%** от накопленного объема актива, переводит прибыль в USDT и пополняет резервный фонд для выкупа следующей неизбежной просадки.
+1. **Регулярный DCA (Scheduled DCA):** базовый периодический выкуп по расписанию (раз в сутки).
+2. **Умный выкуп просадок (Smart Dip-Buying):** при касании/пробое нижней полосы Боллинджера и падении RSI (<38) активируется динамический множитель (1.5x, 2.5x или до 4x на экстремальных скидках).
+3. **Сбор урожая (Profit Harvester & Rebalance):** при перегреве рынка (выход за верхнюю полосу Боллинджера + RSI > 75 и профит от +12%) продает 15–20% от объема позиции в стейблкоины для пополнения пула ликвидности.
 
 ---
 
-## 🚀 Быстрый старт
+## 🚀 Быстрый запуск
 
-### 1. Клонирование и установка зависимостей
 ```bash
 git clone https://github.com/markankamaransheogarat-sys/bybit-smart-piggybank.git
 cd bybit-smart-piggybank
 pip install -r requirements.txt
-```
-
-### 2. Конфигурация окружения
-Скопируйте пример файла конфигурации:
-```bash
 cp .env.example .env
-```
-Заполните `.env`:
-```ini
-# Bybit API Keys (Оставьте пустыми для безопасного режима симуляции!)
-BYBIT_API_KEY=your_key_here
-BYBIT_API_SECRET=your_secret_here
-BYBIT_TESTNET=false
-
-# Telegram алерты (по желанию)
-TELEGRAM_BOT_TOKEN=your_bot_token
-TELEGRAM_CHAT_ID=your_chat_id
-
-# Dashboard & Server
-DASHBOARD_HOST=127.0.0.1
-DASHBOARD_PORT=8080
-```
-
-> **Важно:** В файле `config/config.yaml` по умолчанию включен флаг `dry_run: true`. Вы можете тестировать алгоритм на живых ценах Bybit без риска для реального депозита!
-
-### 3. Запуск
-```bash
 python main.py
 ```
-После запуска откройте в браузере: **`http://127.0.0.1:8080`**.
+Веб-дашборд откроется по адресу: **`http://127.0.0.1:8080`**.
 
 ---
 
-## 🤖 AI-Оператор & MCP Протокол
+## 🔒 Дисклеймер / Disclaimer
 
-В систему встроен сервер **Model Context Protocol (MCP)**, позволяющий подключать современные ИИ-модели (Cursor, Claude Desktop, Antigravity) в качестве живых управляющих портфелем:
-
-### Доступные MCP-инструменты:
-1. `get_piggybank_status`: Возвращает актуальный состав портфеля, PnL по каждой монете, остаток резерва USDT и суточные лимиты.
-2. `get_market_analysis`: Возвращает текущие показания полос Боллинджера, RSI и статус просадок/пампов.
-3. `ai_operator_execute_buy`: Позволяет ИИ по вашей команде или собственному анализу совершить внеплановый выкуп с фиксацией аргументации.
-4. `ai_operator_harvest_profit`: Позволяет ИИ зафиксировать процент от позиции в стейблкоины.
-
----
-
-## 📊 Веб-Дашборд
-
-Дашборд доступен на порту `8080` и обновляется в реальном времени каждые 5 секунд:
-* **Сводка портфеля:** общий эквивалент в USD, баланс USDT, суточные расходы.
-* **Таблица активов:** количество, текущая цена Bybit, средневзвешенная точка входа, плавающий PnL и кнопки быстрого DCA / фиксации.
-* **Радар рынка:** наглядное отображение RSI и границ Боллинджера.
-* **Лента ордеров:** подробный журнал со стратегиями и деталями входа.
-
----
-
-## 🔒 Безопасность и дисклеймер
-
-* Проект предназначен для спотового накопления. Спот не несет риска ликвидации, однако криптовалютный рынок высокорискован.
-* Не передавайте ваши API-ключи третьим лицам. Создавайте на Bybit ключи с ограничением по IP и доступом **только к Spot Trading** (без права на вывод средств!).
-* Автор не несет ответственности за возможные финансовые потери. Протестируйте стратегию в режиме `dry_run: true` перед запуском с реальными средствами.
+This software is for educational and portfolio management purposes. Crypto spot trading involves market risks. Always test thoroughly in simulation mode (`dry_run: true`) before deploying real assets.
 
 ---
 
