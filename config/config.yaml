@@ -1,0 +1,65 @@
+# Bybit Smart Piggybank Configuration
+
+app:
+  name: "Bybit Smart Piggybank"
+  dry_run: true              # True = Simulation (safe, no real funds used), False = Live Trading
+  base_currency: "USDT"      # Reserve currency
+  check_interval_sec: 60     # Fast tick interval (60s)
+  heavy_analysis_cycles: 5   # Heavy analysis every 5 cycles (~5 min)
+
+# Portfolio Allocation & Targets
+portfolio:
+  assets:
+    BTC:
+      symbol: "BTCUSDT"
+      target_share_pct: 45.0  # 45% of crypto basket
+      base_dca_usd: 15.0      # Base scheduled DCA amount
+      min_order_usd: 5.0
+    ETH:
+      symbol: "ETHUSDT"
+      target_share_pct: 35.0  # 35% of crypto basket
+      base_dca_usd: 10.0
+      min_order_usd: 5.0
+    SOL:
+      symbol: "SOLUSDT"
+      target_share_pct: 20.0  # 20% of crypto basket
+      base_dca_usd: 5.0
+      min_order_usd: 5.0
+
+# Strategy 1: Scheduled DCA
+scheduled_dca:
+  enabled: true
+  interval_hours: 24          # Run regular DCA every 24 hours
+
+# Strategy 2: Smart Dip-Buying (Bollinger Bands + RSI + Multiplier)
+dip_buying:
+  enabled: true
+  timeframe: "1h"             # Candle timeframe for analysis (1h, 4h, 15m)
+  bollinger_window: 20
+  bollinger_std: 2.0
+  rsi_window: 14
+  rsi_dip_threshold: 38.0     # Trigger dip scoring if RSI < 38
+  cooldown_hours: 4           # Min time between dip buys for the same asset
+  multipliers:
+    mild_dip: 1.5             # At Lower BB: 1.5x of base DCA
+    deep_dip: 2.5             # At Lower BB + RSI < 30: 2.5x of base DCA
+    extreme_dip: 4.0          # Below Lower BB by 2%+ and RSI < 25: 4.0x
+
+# Strategy 3: Profit Harvester & Rebalancing (Take Profit into Reserve)
+profit_harvester:
+  enabled: true
+  timeframe: "1h"
+  bollinger_std_high: 2.3     # Extreme upper band
+  rsi_overbought: 75.0        # Extreme RSI threshold
+  min_profit_pct: 12.0        # Minimum average profit before harvesting
+  harvest_chunk_pct: 15.0     # Sell 15% of the position to replenish USDT reserve
+  cooldown_hours: 8           # Cooldown between harvest sells
+
+# Safety & Risk Management
+risk_management:
+  max_daily_spend_usd: 150.0  # Hard daily cap on DCA buys
+  min_usdt_reserve_usd: 20.0  # Minimum USDT balance to keep untouched
+  circuit_breaker:
+    enabled: true
+    market_crash_threshold_pct: -10.0  # 24h drop threshold on BTC to pause all buying
+    pause_duration_hours: 12
