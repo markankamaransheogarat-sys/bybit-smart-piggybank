@@ -181,10 +181,9 @@ python main.py
 
 ---
 
-## 👥 Contributors & Authors
+## 👥 Author
 
-* **Lead Architect & Developer:** [@markankamaransheogarat-sys](https://github.com/markankamaransheogarat-sys) (markankamaran) — Systems & Quant Architecture.
-* **AI Pair Programmer:** Antigravity (Google DeepMind).
+* **Creator & Architect:** [@markankamaransheogarat-sys](https://github.com/markankamaransheogarat-sys) (markankamaran) — Systems & Quant Architecture.
 
 Pull requests, discussions, and feature proposals are warmly welcome! Feel free to open an issue or PR.
 
