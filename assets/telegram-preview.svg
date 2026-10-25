@@ -4,7 +4,7 @@
   <circle cx="36" cy="26" r="16" fill="#f59e0b"/>
   <text x="28" y="32" font-size="14">🐷</text>
   <text x="62" y="24" fill="#ffffff" font-size="14" font-weight="700">Bybit Smart Piggybank Bot</text>
-  <text x="62" y="38" fill="#6c7883" font-size="11">bot &bull; automated trading sentinel</text>
+  <text x="62" y="38" fill="#6c7883" font-size="11">bot &#8226; automated trading sentinel</text>
 
   <!-- Message 1: Alert Buy -->
   <g transform="translate(24, 68)">
