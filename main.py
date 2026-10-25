@@ -7,7 +7,7 @@ import uvicorn
 from dotenv import load_dotenv
 
 from src.exchange.bybit_client import BybitSpotClient
-from src.notifications.telegram_bot import TelegramNotifier
+from src.notifications.telegram_bot import TelegramBotManager
 from src.core.engine import PiggybankEngine
 from src.web.app import create_app
 from src.mcp.server import PiggybankMCPServer
@@ -44,8 +44,9 @@ async def main():
     logger.info("==================================================")
 
     bybit = BybitSpotClient(api_key=api_key, api_secret=api_secret, testnet=testnet, dry_run=dry_run)
-    notifier = TelegramNotifier(bot_token=tg_token, chat_id=tg_chat_id)
+    notifier = TelegramBotManager(bot_token=tg_token, chat_id=tg_chat_id)
     engine = PiggybankEngine(config=config, bybit=bybit, notifier=notifier)
+    notifier.engine = engine  # link engine for interactive bot commands
     mcp_server = PiggybankMCPServer(engine)
 
     # FastAPI Web Dashboard & REST/MCP endpoints
@@ -64,20 +65,22 @@ async def main():
 
     # Run Uvicorn server in background task
     port = int(os.getenv("DASHBOARD_PORT", "8080"))
-    host = os.getenv("DASHBOARD_HOST", "127.0.0.1")
+    host = os.getenv("DASHBOARD_HOST", "0.0.0.0")
     server_config = uvicorn.Config(app=app, host=host, port=port, log_level="warning")
     server = uvicorn.Server(server_config)
 
     dashboard_task = asyncio.create_task(server.serve())
     engine_task = asyncio.create_task(engine.start())
+    tg_task = asyncio.create_task(notifier.start())
 
     logger.info(f"Dashboard available at: http://{host}:{port}")
 
     try:
-        await asyncio.gather(dashboard_task, engine_task)
+        await asyncio.gather(dashboard_task, engine_task, tg_task)
     except (asyncio.CancelledError, KeyboardInterrupt):
         logger.info("Shutting down...")
         engine.stop()
+        await notifier.stop()
 
 if __name__ == "__main__":
     asyncio.run(main())

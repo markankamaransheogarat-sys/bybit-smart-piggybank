@@ -1,0 +1,26 @@
+services:
+  bybit-piggybank:
+    build: .
+    container_name: bybit_smart_piggybank
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - BYBIT_API_KEY=${BYBIT_API_KEY:-}
+      - BYBIT_API_SECRET=${BYBIT_API_SECRET:-}
+      - BYBIT_TESTNET=${BYBIT_TESTNET:-false}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
+      - DASHBOARD_HOST=0.0.0.0
+      - DASHBOARD_PORT=8080
+    volumes:
+      - piggybank_data:/app/data
+      - ./config/config.yaml:/app/config/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  piggybank_data:

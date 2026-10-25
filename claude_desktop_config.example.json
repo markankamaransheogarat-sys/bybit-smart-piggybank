@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "bybit-piggybank": {
+      "command": "python",
+      "args": ["-m", "src.mcp.server"],
+      "env": {
+        "DASHBOARD_URL": "http://127.0.0.1:8080"
+      }
+    }
+  }
+}
