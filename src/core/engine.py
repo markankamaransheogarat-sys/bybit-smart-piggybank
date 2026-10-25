@@ -6,7 +6,7 @@ from src.exchange.bybit_client import BybitSpotClient
 from src.core.analyzer import MarketAnalyzer
 from src.core.risk import RiskManager
 from src.core.database import Database
-from src.notifications.telegram_bot import TelegramNotifier
+from src.notifications.telegram_bot import TelegramBotManager
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class PiggybankEngine:
     - AI / Technical Dip-Buying
     - Profit Harvester / Rebalancing into USDT
     """
-    def __init__(self, config: Dict[str, Any], bybit: BybitSpotClient, notifier: TelegramNotifier):
+    def __init__(self, config: Dict[str, Any], bybit: BybitSpotClient, notifier: TelegramBotManager):
         self.config = config
         self.bybit = bybit
         self.notifier = notifier

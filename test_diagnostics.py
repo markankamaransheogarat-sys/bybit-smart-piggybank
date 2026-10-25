@@ -5,7 +5,7 @@ from src.exchange.bybit_client import BybitSpotClient
 from src.core.analyzer import MarketAnalyzer
 from src.core.database import Database
 from src.core.risk import RiskManager
-from src.notifications.telegram_bot import TelegramNotifier
+from src.notifications.telegram_bot import TelegramBotManager
 from src.core.engine import PiggybankEngine
 from src.mcp.server import PiggybankMCPServer
 
@@ -71,7 +71,7 @@ async def run_diagnostics():
     print("\n=== 6. Testing MCP Tool Endpoints ===")
     with open("config/config.yaml", "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
-    notifier = TelegramNotifier()
+    notifier = TelegramBotManager()
     engine = PiggybankEngine(config=cfg, bybit=client, notifier=notifier)
     engine.latest_analysis["BTCUSDT"] = analysis
     mcp = PiggybankMCPServer(engine)
