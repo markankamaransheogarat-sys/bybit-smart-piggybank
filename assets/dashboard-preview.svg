@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Top App Bar -->
+  <rect x="0" y="0" width="1000" height="64" fill="url(#headerGrad)" stroke="#1e293b" stroke-width="1"/>
+  <rect x="24" y="14" width="36" height="36" rx="10" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="32" y="39" font-size="20">🐷</text>
+  <text x="72" y="34" fill="#ffffff" font-size="16" font-weight="700">Bybit Smart Piggybank</text>
+  <text x="72" y="49" fill="#94a3b8" font-size="11">Autonomous Spot DCA &amp; Dip Accumulator Engine</text>
+
+  <!-- Status Badges -->
+  <rect x="760" y="18" width="130" height="28" rx="14" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="1"/>
+  <circle cx="776" cy="32" r="4" fill="#10b981"/>
+  <text x="786" y="36" fill="#10b981" font-size="11" font-weight="600">LIVE BYBIT FEED</text>
+
+  <rect x="900" y="18" width="76" height="28" rx="14" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-width="1"/>
+  <text x="918" y="36" fill="#a5b4fc" font-size="11" font-weight="600">MCP ON</text>
+
+  <!-- Metric Card 1: Total Portfolio -->
+  <g transform="translate(24, 84)">
+    <rect width="224" height="96" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#shadow)"/>
+    <text x="18" y="28" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.5">PORTFOLIO VALUATION</text>
+    <text x="18" y="58" fill="#ffffff" font-size="24" font-weight="800">$1,482.60</text>
+    <text x="18" y="80" fill="#10b981" font-size="11" font-weight="600">▲ +14.8% Net PnL</text>
+  </g>
+
+  <!-- Metric Card 2: Reserve -->
+  <g transform="translate(268, 84)">
+    <rect width="224" height="96" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#shadow)"/>
+    <text x="18" y="28" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.5">USDT LIQUID RESERVE</text>
+    <text x="18" y="58" fill="#10b981" font-size="24" font-weight="800">$645.20</text>
+    <text x="18" y="80" fill="#64748b" font-size="11">Ready for Dip Multipliers</text>
+  </g>
+
+  <!-- Metric Card 3: 24h Spend -->
+  <g transform="translate(512, 84)">
+    <rect width="224" height="96" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#shadow)"/>
+    <text x="18" y="28" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.5">24H DEPLOYED</text>
+    <text x="18" y="58" fill="#06b6d4" font-size="24" font-weight="800">$37.50</text>
+    <text x="18" y="80" fill="#64748b" font-size="11">Cap: $150.00 / 24h</text>
+  </g>
+
+  <!-- Metric Card 4: Circuit Breaker -->
+  <g transform="translate(756, 84)">
+    <rect width="220" height="96" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#shadow)"/>
+    <text x="18" y="28" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.5">CIRCUIT BREAKER</text>
+    <text x="18" y="58" fill="#10b981" font-size="24" font-weight="800">HEALTHY</text>
+    <text x="18" y="80" fill="#64748b" font-size="11">Anti-Knife Sentinel Active</text>
+  </g>
+
+  <!-- Main Table: Assets -->
+  <g transform="translate(24, 200)">
+    <rect width="612" height="230" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="20" y="32" fill="#ffffff" font-size="14" font-weight="700">Accumulated Crypto Basket</text>
+    <text x="500" y="32" fill="#64748b" font-size="11">Bybit Spot Live</text>
+
+    <!-- Table Header -->
+    <line x1="20" y1="46" x2="592" y2="46" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="64" fill="#64748b" font-size="11" font-weight="600">ASSET</text>
+    <text x="100" y="64" fill="#64748b" font-size="11" font-weight="600">HOLDINGS</text>
+    <text x="210" y="64" fill="#64748b" font-size="11" font-weight="600">BYBIT PRICE</text>
+    <text x="320" y="64" fill="#64748b" font-size="11" font-weight="600">AVG COST</text>
+    <text x="430" y="64" fill="#64748b" font-size="11" font-weight="600">PNL</text>
+    <text x="510" y="64" fill="#64748b" font-size="11" font-weight="600">ACTION</text>
+
+    <!-- Row 1: BTC -->
+    <line x1="20" y1="76" x2="592" y2="76" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="102" fill="#ffffff" font-size="13" font-weight="700">BTC</text>
+    <text x="100" y="102" fill="#e2e8f0" font-size="12">0.005820</text>
+    <text x="210" y="102" fill="#e2e8f0" font-size="12">$80,652.90</text>
+    <text x="320" y="102" fill="#94a3b8" font-size="12">$78,120.40</text>
+    <text x="430" y="102" fill="#10b981" font-size="12" font-weight="700">+3.2%</text>
+    <rect x="506" y="88" width="76" height="22" rx="6" fill="#4f46e5" fill-opacity="0.3" stroke="#6366f1" stroke-width="1"/>
+    <text x="520" y="103" fill="#a5b4fc" font-size="10" font-weight="600">DCA $15</text>
+
+    <!-- Row 2: ETH -->
+    <line x1="20" y1="124" x2="592" y2="124" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="150" fill="#ffffff" font-size="13" font-weight="700">ETH</text>
+    <text x="100" y="150" fill="#e2e8f0" font-size="12">0.142050</text>
+    <text x="210" y="150" fill="#e2e8f0" font-size="12">$2,335.10</text>
+    <text x="320" y="150" fill="#94a3b8" font-size="12">$2,190.00</text>
+    <text x="430" y="150" fill="#10b981" font-size="12" font-weight="700">+6.6%</text>
+    <rect x="506" y="136" width="76" height="22" rx="6" fill="#4f46e5" fill-opacity="0.3" stroke="#6366f1" stroke-width="1"/>
+    <text x="520" y="151" fill="#a5b4fc" font-size="10" font-weight="600">DCA $10</text>
+
+    <!-- Row 3: SOL -->
+    <line x1="20" y1="172" x2="592" y2="172" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="198" fill="#ffffff" font-size="13" font-weight="700">SOL</text>
+    <text x="100" y="198" fill="#e2e8f0" font-size="12">1.840200</text>
+    <text x="210" y="198" fill="#e2e8f0" font-size="12">$101.40</text>
+    <text x="320" y="198" fill="#94a3b8" font-size="12">$89.20</text>
+    <text x="430" y="198" fill="#10b981" font-size="12" font-weight="700">+13.6%</text>
+    <rect x="506" y="184" width="76" height="22" rx="6" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+    <text x="516" y="199" fill="#fcd34d" font-size="10" font-weight="600">HARVEST</text>
+  </g>
+
+  <!-- Right Panel: Market Indicators & Signals -->
+  <g transform="translate(654, 200)">
+    <rect width="322" height="230" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="20" y="32" fill="#ffffff" font-size="14" font-weight="700">AI / Quantitative Signals (1h)</text>
+
+    <!-- Signal Card 1 -->
+    <g transform="translate(16, 48)">
+      <rect width="290" height="50" rx="10" fill="#1e293b" fill-opacity="0.5" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="700">BTCUSDT</text>
+      <text x="200" y="24" fill="#10b981" font-size="11" font-weight="600">RSI: 34.6 (Dip)</text>
+      <text x="14" y="40" fill="#94a3b8" font-size="10">Lower BB: $79,989 | Upper: $81,284</text>
+    </g>
+
+    <!-- Signal Card 2 -->
+    <g transform="translate(16, 106)">
+      <rect width="290" height="50" rx="10" fill="#1e293b" fill-opacity="0.5" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="700">ETHUSDT</text>
+      <text x="210" y="24" fill="#94a3b8" font-size="11">RSI: 48.2</text>
+      <text x="14" y="40" fill="#94a3b8" font-size="10">Neutral Mid-Band Range</text>
+    </g>
+
+    <!-- Signal Card 3 -->
+    <g transform="translate(16, 164)">
+      <rect width="290" height="50" rx="10" fill="#1e293b" fill-opacity="0.5" stroke="#f59e0b" stroke-width="1"/>
+      <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="700">SOLUSDT</text>
+      <text x="175" y="24" fill="#f59e0b" font-size="11" font-weight="700">HARVEST READY</text>
+      <text x="14" y="40" fill="#94a3b8" font-size="10">RSI: 76.4 | Piercing Upper BB (+13.6%)</text>
+    </g>
+  </g>
+
+  <!-- Bottom Log: Recent Transactions -->
+  <g transform="translate(24, 446)">
+    <rect width="952" height="114" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="20" y="26" fill="#ffffff" font-size="13" font-weight="700">Recent Autonomous Activity</text>
+    
+    <text x="24" y="52" fill="#64748b" font-size="11">11:01:20</text>
+    <rect x="80" y="40" width="48" height="18" rx="4" fill="#10b981" fill-opacity="0.15"/>
+    <text x="90" y="53" fill="#10b981" font-size="10" font-weight="700">BUY</text>
+    <text x="140" y="52" fill="#ffffff" font-size="11" font-weight="600">BTCUSDT</text>
+    <text x="220" y="52" fill="#cbd5e1" font-size="11">$25.00 USDT (0.000311 BTC @ $80,254)</text>
+    <text x="560" y="52" fill="#6366f1" font-size="11" font-weight="600">SMART DIP (MILD 1.5x)</text>
+    <text x="760" y="52" fill="#64748b" font-size="11">RSI 34.6 | Lower BB Proximity</text>
+
+    <line x1="20" y1="64" x2="932" y2="64" stroke="#1e293b" stroke-width="1"/>
+
+    <text x="24" y="86" fill="#64748b" font-size="11">10:45:00</text>
+    <rect x="80" y="74" width="48" height="18" rx="4" fill="#f59e0b" fill-opacity="0.15"/>
+    <text x="86" y="87" fill="#f59e0b" font-size="10" font-weight="700">SELL</text>
+    <text x="140" y="86" fill="#ffffff" font-size="11" font-weight="600">SOLUSDT</text>
+    <text x="220" y="86" fill="#cbd5e1" font-size="11">0.3200 SOL (+13.6% profit -> +$32.44 into USDT reserve)</text>
+    <text x="630" y="86" fill="#f59e0b" font-size="11" font-weight="600">PROFIT HARVEST</text>
+    <text x="760" y="86" fill="#64748b" font-size="11">Upper BB Breakout + Overbought</text>
+  </g>
+</svg>

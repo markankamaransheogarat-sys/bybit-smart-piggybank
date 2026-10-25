@@ -8,11 +8,25 @@
 [![Protocol: MCP](https://img.shields.io/badge/Protocol-Model%20Context%20Protocol-8A2BE2.svg?style=for-the-badge)](https://modelcontextprotocol.io)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![CI/CD Pipeline](https://github.com/markankamaransheogarat-sys/bybit-smart-piggybank/actions/workflows/test.yml/badge.svg)](https://github.com/markankamaransheogarat-sys/bybit-smart-piggybank/actions)
 
 **An autonomous, algorithmic portfolio accumulation engine for building a classical crypto basket (BTC, ETH, SOL) on Bybit Spot. Features dynamic dip-buying, profit harvesting back into reserve, automated risk management, real-time Web Dashboard, and native AI operator support via MCP.**
 
 [English](#-english-version) • [Русская версия](#-русская-версия)
 
+</div>
+
+---
+
+
+---
+
+<div align="center">
+  <h3>🖥️ Real-Time Web Dashboard Preview</h3>
+  <img src="assets/dashboard-preview.svg" alt="Bybit Smart Piggybank Dashboard" width="95%">
+  <br><br>
+  <h3>📱 Interactive Telegram Sentinel &amp; Control</h3>
+  <img src="assets/telegram-preview.svg" alt="Telegram Interactive Bot" width="65%">
 </div>
 
 ---
